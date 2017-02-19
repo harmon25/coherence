@@ -9,11 +9,9 @@ defmodule Coherence.Web do
       import Ecto.Query, only: [from: 1, from: 2]
     end
     
-    if use_binary_id?() do
-     @primary_key {:id, :binary_id, autogenerate: true}
-     @foreign_key_type :binary_id
-    end
-    
+     @primary_key {:id, id_type(), autogenerate: true}
+     @foreign_key_type id_type()
+   
   end
 
   def controller do
@@ -57,6 +55,11 @@ defmodule Coherence.Web do
     apply(__MODULE__, which, [])
   end
   
-  defp use_binary_id?, do: !!Application.get_env(:phoenix, :generators)[:binary_id]
-  
+  defp id_type do
+   if !!Application.get_env(:phoenix, :generators)[:binary_id] do
+     :binary_id
+   else
+     :integer
+   end
+  end
 end
