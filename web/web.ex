@@ -8,6 +8,12 @@ defmodule Coherence.Web do
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
     end
+    
+    if use_binary_id?() do
+     @primary_key {:id, :binary_id, autogenerate: true}
+     @foreign_key_type :binary_id
+    end
+    
   end
 
   def controller do
@@ -50,4 +56,7 @@ defmodule Coherence.Web do
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
   end
+  
+  defp use_binary_id?, do: !!Application.get_env(:phoenix, :generators)[:binary_id]
+  
 end
