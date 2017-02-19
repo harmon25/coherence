@@ -7,11 +7,10 @@ defmodule Coherence.Web do
       import Ecto
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
-    end
-    
+      
      @primary_key {:id, id_type(), autogenerate: true}
      @foreign_key_type id_type()
-   
+    end  
   end
 
   def controller do
